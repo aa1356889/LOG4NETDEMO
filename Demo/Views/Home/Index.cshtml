@@ -1,0 +1,39 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+<script src="~/jquery.min.js"></script>
+<h2>Index</h2>
+<input type="button" id="error1" class="errortest" value="测试普通参数绑定错误日志" />
+<input type="button" id="error2" class="errortest" value="测试引用类型参数绑定错误日志" />
+<input type="button" id="error3" class="errortest" value="测试数组类型参数绑定错误日志" />
+<script type="text/javascript">
+    $(function () {
+        $(".errortest").click(function () {
+            var id = $(this).attr("id");
+            var url;
+            var paramter;
+            switch (id) {
+                case "error1":
+                    url = "@Url.Action("Error1")";
+                    paramter = { id: "测试" };
+                    break;
+                case "error2":
+                    url = "@Url.Action("Error2")";
+                    paramter = { Name: "小明", age: "2" };
+                    break;
+                case "error3":
+                    url = "@Url.Action("Error3")";
+                paramter = { ClassName: "一年级", Students: [{ Name: "小明3", age: "2" }, { Name: "小明2", age: "2" }] };
+                break;
+            }
+            $.ajax({
+                type: "Post",
+                url: url,
+                data: paramter,
+                success: function(ajadata) {
+                    alert("项目目录Log查看日志");
+                }
+            });
+        });
+    });
+</script>
